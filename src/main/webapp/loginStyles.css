@@ -1,0 +1,94 @@
+/* General reset */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #1e90ff, #00bfff);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Login Container */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Login Box */
+.login-box h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #333;
+    text-align: center;
+}
+
+.login-box .subtitle {
+    font-size: 1rem;
+    color: #666;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* Form Elements */
+.login-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form label {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.login-form input,
+.login-form select {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+.login-form input:focus,
+.login-form select:focus {
+    border: 1px solid #1e90ff;
+    box-shadow: 0 0 5px rgba(30, 144, 255, 0.5);
+}
+
+/* Login Button */
+.login-button {
+    margin-top: 1.5rem;
+    background: #1e90ff;
+    color: #fff;
+    font-size: 1rem;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.login-button:hover {
+    background: #007acc;
+}
+
+/* Footer Text */
+.footer-text {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    text-align: center;
+    color: #999;
+}
