@@ -18,4 +18,4 @@ ENV PORT=8888
 
 # Run the Spring Boot application using spring-boot:run to ensure Tomcat can locate
 # and compile JSP files from the src/main/webapp directory.
-CMD ["mvn", "spring-boot:run", "-Dspring-boot.run.arguments=--server.port=${PORT}"]
+CMD ["mvn", "spring-boot:run"]
