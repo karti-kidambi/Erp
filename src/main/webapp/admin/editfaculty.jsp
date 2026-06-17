@@ -1,92 +1,197 @@
 <%@page import="com.sdp.erp.model.Faculty"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+Faculty faculty = (Faculty) request.getAttribute("faculty");
+%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Edit Faculty</title>
+    <title>Edit Faculty - Admin Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
+        :root {
+            --primary: #0f172a;
+            --primary-light: #1e293b;
+            --accent: #d97706;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass: rgba(15, 23, 42, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --success: #10b981;
+            --danger: #ef4444;
+            --font-sans: 'Outfit', sans-serif;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-sans);
         }
+
+        body {
+            background-color: #0b0f19;
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 40px 24px;
+        }
+
         .container {
-            width: 50%;
-            margin: 50px auto;
-            background: #fff;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        input, select, button, a.cancel-button {
             width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            max-width: 600px;
+            margin: 0 auto;
         }
-        button {
-            background-color: #28a745;
-            color: white;
-            text-align: center;
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
             text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+
+        .back-btn:hover {
+            color: #ffffff;
+            transform: translateX(-4px);
+        }
+
+        /* Form Card */
+        .form-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(16px);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+        }
+
+        h1 span {
+            color: var(--accent);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        input, select {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 10px 14px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 1rem;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--accent) 0%, #f59e0b 100%);
+            color: #0b0f19;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
             cursor: pointer;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        a.cancel-button {
-            display: inline-block;
+            transition: var(--transition);
+            box-shadow: 0 10px 20px -5px rgba(217, 119, 6, 0.4);
+            flex: 1;
             text-align: center;
-            background-color: #dc3545;
-            color: white;
-            text-decoration: none;
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 4px;
         }
-        a.cancel-button:hover {
-            background-color: #c82333;
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px -5px rgba(217, 119, 6, 0.6);
+        }
+
+        .cancel-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--glass-border);
+            color: #ffffff;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+            flex: 1;
+        }
+
+        .cancel-btn:hover {
+            background-color: rgba(255,255,255,0.1);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Edit Faculty</h1>
-        <form action="/admin/update/<%= ((Faculty) request.getAttribute("faculty")).getFacultyId() %>" method="POST">
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" 
-                       value="<%= ((Faculty) request.getAttribute("faculty")).getUsername() %>" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" 
-                       value="<%= ((Faculty) request.getAttribute("faculty")).getEmail() %>" required>
-            </div>
-            <div class="form-group">
-                <label for="department">Department:</label>
-                <select id="department" name="department" required>
-                    <option value="CSE" <%= "CSE".equals(((Faculty) request.getAttribute("faculty")).getDepartment()) ? "selected" : "" %>>CSE</option>
-                    <option value="ECE" <%= "ECE".equals(((Faculty) request.getAttribute("faculty")).getDepartment()) ? "selected" : "" %>>ECE</option>
-                </select>
-            </div>
-            <button type="submit">Update</button>
-            <a href="/admin/faculty" class="cancel-button">Cancel</a>
-        </form>
+        <a href="/admin/faculty" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Registry</a>
+
+        <div class="form-card">
+            <h1>Modify Faculty <span>Details</span></h1>
+
+            <form action="/admin/update/<%= faculty != null ? faculty.getFacultyId() : "" %>" method="POST">
+                <div class="form-group">
+                    <label for="username">Full Name</label>
+                    <input type="text" id="username" name="username" value="<%= faculty != null ? faculty.getUsername() : "" %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Official Email</label>
+                    <input type="email" id="email" name="email" value="<%= faculty != null ? faculty.getEmail() : "" %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="department">Department</label>
+                    <select id="department" name="department" required>
+                        <option value="Computer Science" <%= (faculty != null && "Computer Science".equals(faculty.getDepartment())) ? "selected" : "" %>>Computer Science & Engineering</option>
+                        <option value="Electronics" <%= (faculty != null && "Electronics".equals(faculty.getDepartment())) ? "selected" : "" %>>Electronics & Communication</option>
+                        <option value="Mechanical" <%= (faculty != null && "Mechanical".equals(faculty.getDepartment())) ? "selected" : "" %>>Mechanical Engineering</option>
+                        <option value="Civil" <%= (faculty != null && "Civil".equals(faculty.getDepartment())) ? "selected" : "" %>>Civil Engineering</option>
+                    </select>
+                </div>
+
+                <div class="btn-group">
+                    <a href="/admin/faculty" class="cancel-btn">Cancel</a>
+                    <button type="submit" class="submit-btn">Save Changes</button>
+                </div>
+            </form>
+        </div>
     </div>
 </body>
 </html>

@@ -11,6 +11,7 @@ import com.sdp.erp.model.Attendance;
 import com.sdp.erp.model.Course;
 import com.sdp.erp.model.Faculty;
 import com.sdp.erp.model.Student;
+import com.sdp.erp.model.GradePoints;
 import com.sdp.erp.repository.AttendanceRepository;
 import com.sdp.erp.repository.CourseRepository;
 import com.sdp.erp.repository.FacultyRepository;
@@ -98,5 +99,29 @@ public class FacultyServiceImpl implements FacultyService {
    public void saveAttendance(List<Attendance> attendanceList) {
        attendanceRepository.saveAll(attendanceList);
    }
+
+    @Override
+    public GradePoints getGradePointsByStudentAndCourse(Long studentId, Long courseId) {
+        return gradePointsRepository.findByStudentIdAndCourseId(studentId, courseId)
+            .orElseGet(() -> {
+                GradePoints gp = new GradePoints();
+                gp.setStudentId(studentId);
+                gp.setCourseId(courseId);
+                Course course = courseRepository.findById(courseId).orElse(null);
+                if (course != null) {
+                    gp.setSubject(course.getCourseName());
+                }
+                gp.setInternalMarks(0.0f);
+                gp.setExternalMarks(0.0f);
+                gp.calculateGrade();
+                return gradePointsRepository.save(gp);
+            });
+    }
+
+    @Override
+    public void saveGradePoints(GradePoints gp) {
+        gp.calculateGrade();
+        gradePointsRepository.save(gp);
+    }
 
 }

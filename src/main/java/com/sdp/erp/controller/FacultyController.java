@@ -20,8 +20,12 @@ import com.sdp.erp.model.Attendance;
 import com.sdp.erp.model.Course;
 import com.sdp.erp.model.Faculty;
 import com.sdp.erp.model.Student;
+import com.sdp.erp.model.GradePoints;
 import com.sdp.erp.service.FacultyService;
+import com.sdp.erp.service.StudentService;
 
+import java.util.Map;
+import java.util.HashMap;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -30,6 +34,9 @@ import jakarta.servlet.http.HttpSession;
 public class FacultyController {
    @Autowired
    private FacultyService facultyService;
+   
+   @Autowired
+   private StudentService studentService;
 
    
    
@@ -71,14 +78,60 @@ public class FacultyController {
        modelAndView.setViewName("faculty/assignments");
        return modelAndView;
    }
-   @GetMapping("/students")
-   public ModelAndView displayStudents(@RequestParam long courseId) {
-       ModelAndView modelAndView = new ModelAndView();
-       List<Student> students = facultyService.getStudentsByCourseId(courseId);
-       modelAndView.addObject("students", students);
-       modelAndView.setViewName("faculty/students");
-       return modelAndView;
-   }
+    @GetMapping("/students")
+    public ModelAndView displayStudents(@RequestParam long courseId) {
+        ModelAndView modelAndView = new ModelAndView();
+        List<Student> students = facultyService.getStudentsByCourseId(courseId);
+        
+        Course course = studentService.getCourseById(courseId);
+        
+        Map<Long, GradePoints> studentGrades = new HashMap<>();
+        for (Student s : students) {
+            GradePoints gp = facultyService.getGradePointsByStudentAndCourse(s.getStudentId(), courseId);
+            studentGrades.put(s.getStudentId(), gp);
+        }
+        
+        modelAndView.addObject("course", course);
+        modelAndView.addObject("students", students);
+        modelAndView.addObject("studentGrades", studentGrades);
+        modelAndView.setViewName("faculty/students");
+        return modelAndView;
+    }
+
+    @PostMapping("/marks/save")
+    public String saveMarks(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        try {
+            Long courseId = Long.valueOf(request.getParameter("courseId"));
+            List<Student> students = facultyService.getStudentsByCourseId(courseId);
+            
+            for (Student s : students) {
+                String internalParam = request.getParameter("internal-" + s.getStudentId());
+                String externalParam = request.getParameter("external-" + s.getStudentId());
+                
+                if (internalParam != null || externalParam != null) {
+                    GradePoints gp = facultyService.getGradePointsByStudentAndCourse(s.getStudentId(), courseId);
+                    
+                    if (internalParam != null && !internalParam.trim().isEmpty()) {
+                        gp.setInternalMarks(Float.valueOf(internalParam));
+                    } else {
+                        gp.setInternalMarks(0.0f);
+                    }
+                    if (externalParam != null && !externalParam.trim().isEmpty()) {
+                        gp.setExternalMarks(Float.valueOf(externalParam));
+                    } else {
+                        gp.setExternalMarks(0.0f);
+                    }
+                    
+                    facultyService.saveGradePoints(gp);
+                }
+            }
+            redirectAttributes.addFlashAttribute("successMessage", "Marks saved successfully!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("errorMessage", "Failed to save marks. Please try again.");
+        }
+        return "redirect:/faculty/";
+    }
    
    @GetMapping("/getstudents")
    public ModelAndView viewStudents() {

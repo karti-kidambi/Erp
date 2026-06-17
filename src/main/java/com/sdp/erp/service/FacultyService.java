@@ -22,5 +22,6 @@ public interface FacultyService {
 	List<Student> getStudentsByCourseId(Long courseId);
 	List<Attendance> getAttendanceByCourseAndDate(Long courseId, String date);
 	void saveAttendance(List<Attendance> attendanceList);
-
-	}
+	GradePoints getGradePointsByStudentAndCourse(Long studentId, Long courseId);
+	void saveGradePoints(GradePoints gp);
+}

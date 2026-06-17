@@ -3,163 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>College ERP - Login</title>
-    <!-- Google Fonts Import -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>DonK-University ERP - Sign In</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Reset and Base Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
         }
 
         body {
-            font-family: 'Poppins', sans-serif; /* Changed from Arial to Poppins */
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            line-height: 1.6;
-            background: linear-gradient(135deg, #4f5985 0%, #764ba2 100%);
-            text-rendering: optimizeLegibility;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            background: radial-gradient(circle at top right, rgba(217, 119, 6, 0.1) 0%, transparent 60%),
+                        radial-gradient(circle at bottom left, rgba(30, 58, 138, 0.15) 0%, transparent 60%),
+                        #0b0f19;
+            color: #f8fafc;
+            padding: 20px;
         }
 
         .login-container {
             width: 100%;
-            max-width: 600px;
-            padding: 30px;
+            max-width: 480px;
         }
 
         .login-box {
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-            padding: 60px 45px;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             text-align: center;
         }
 
         h1 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 28px;
-            font-weight: 700;
-            font-family: 'Poppins', sans-serif; /* Explicitly set font */
-            letter-spacing: -0.5px; /* Slight letter spacing for clean look */
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 0.5rem;
+        }
+
+        h1 span {
+            color: #d97706;
         }
 
         .subtitle {
-            color: #777;
-            margin-bottom: 35px;
-            font-size: 18px;
+            color: #94a3b8;
+            font-size: 0.95rem;
             font-weight: 300;
+            margin-bottom: 2.5rem;
         }
 
         .login-form {
             display: flex;
             flex-direction: column;
+            text-align: left;
         }
 
         label {
-            text-align: left;
-            margin-bottom: 8px;
-            color: #555;
-            font-size: 16px;
+            font-size: 0.9rem;
             font-weight: 500;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
         }
 
         input {
             width: 100%;
-            padding: 15px 20px;
-            margin-bottom: 25px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 18px;
-            font-family: 'Roboto', sans-serif; /* Different font for inputs */
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 0.9rem 1.2rem;
+            color: #ffffff;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
             transition: all 0.3s ease;
         }
 
         input:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+            border-color: #d97706;
+            box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.25);
         }
 
         .login-button {
-            background-color: #667eea;
-            color: white;
+            background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+            color: #0b0f19;
             border: none;
-            padding: 15px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 18px;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1.05rem;
             font-weight: 600;
-            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 10px;
-            text-transform: uppercase; /* Optional: make button text uppercase */
-            letter-spacing: 1px; /* Slight letter spacing */
+            margin-top: 0.5rem;
         }
 
         .login-button:hover {
-            background-color: #5a5dea;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px -5px rgba(217, 119, 6, 0.4);
         }
 
         .login-button:active {
-            transform: scale(0.98);
+            transform: translateY(0);
+        }
+
+        /* Demo Accounts Widget */
+        .demo-widget {
+            margin-top: 2.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 1.5rem;
+            text-align: left;
+        }
+
+        .demo-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #d97706;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .demo-accounts {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .demo-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .demo-card:hover {
+            background: rgba(217, 119, 6, 0.08);
+            border-color: rgba(217, 119, 6, 0.3);
+        }
+
+        .demo-role {
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 2px;
+        }
+
+        .demo-user {
+            color: #94a3b8;
         }
 
         .footer-text {
-            margin-top: 35px;
-            color: #888;
-            font-size: 14px;
-            font-weight: 300;
-        }
-
-        /* Responsive Design */
-        @media screen and (max-width: 480px) {
-            .login-container {
-                max-width: 95%;
-                padding: 20px;
-            }
-
-            .login-box {
-                padding: 40px 25px;
-            }
-
-            h1 {
-                font-size: 24px;
-            }
-
-            input, .login-button {
-                padding: 12px 18px;
-                font-size: 16px;
-            }
+            margin-top: 2.5rem;
+            color: #475569;
+            font-size: 0.8rem;
         }
     </style>
 </head>
 <body>
     <div class="login-container">
         <div class="login-box">
-            <h1>College ERP System</h1>
-            <p class="subtitle">Login to your account</p>
+            <h1>DonK <span>ERP</span></h1>
+            <p class="subtitle">Academic Information System Sign-In</p>
 
             <form action="/CheckLogin" method="post" class="login-form">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                <label for="username">Email or Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter username or official email" required>
 
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your secure password" required>
 
-                <button type="submit" class="login-button">Login</button>
+                <button type="submit" class="login-button">Sign In</button>
             </form>
 
-            <p class="footer-text">� 2024 College ERP. All rights reserved.</p>
+            <div class="demo-widget">
+                <div class="demo-title">Quick Demo Login</div>
+                <div class="demo-accounts">
+                    <div class="demo-card" onclick="fillCreds('admin', 'admin')">
+                        <div class="demo-role">System Administrator</div>
+                        <div class="demo-user">User: admin | Pass: admin</div>
+                    </div>
+                    <div class="demo-card" onclick="fillCreds('srinivas@donk.edu.in', 'faculty')">
+                        <div class="demo-role">Faculty Portal (DR.Srinivas)</div>
+                        <div class="demo-user">User: srinivas@donk.edu.in | Pass: faculty</div>
+                    </div>
+                    <div class="demo-card" onclick="fillCreds('kartik@student.donk.edu.in', 'student')">
+                        <div class="demo-role">Student Portal (K. Kartik)</div>
+                        <div class="demo-user">User: kartik@student.donk.edu.in | Pass: student</div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="footer-text">&copy; 2026 DonK-University. All rights reserved.</p>
         </div>
     </div>
+
+    <script>
+        function fillCreds(username, password) {
+            document.getElementById('username').value = username;
+            document.getElementById('password').value = password;
+        }
+    </script>
 </body>
 </html>

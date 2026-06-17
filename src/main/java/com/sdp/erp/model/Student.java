@@ -22,6 +22,10 @@ public class Student {
     private String email;
     private String course;
     private String password;
+    private String rollNumber;
+    private int semester;
+    private String department;
+    private String section;
     @ManyToMany @JoinTable( name = "student_course", 
     		joinColumns = @JoinColumn(name = "student_id"), 
     		inverseJoinColumns = @JoinColumn(name = "course_id") 
@@ -80,6 +84,28 @@ public class Student {
 	public void setGradepoint(int gradepoint) {
 		this.gradepoint = gradepoint;
 	}
-
-	
+	public String getRollNumber() {
+		return rollNumber;
+	}
+	public void setRollNumber(String rollNumber) {
+		this.rollNumber = rollNumber;
+	}
+	public int getSemester() {
+		return semester;
+	}
+	public void setSemester(int semester) {
+		this.semester = semester;
+	}
+	public String getDepartment() {
+		return department;
+	}
+	public void setDepartment(String department) {
+		this.department = department;
+	}
+	public String getSection() {
+		return section;
+	}
+	public void setSection(String section) {
+		this.section = section;
+	}
 }

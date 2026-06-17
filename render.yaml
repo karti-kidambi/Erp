@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: donk-university-erp
+    env: docker
+    plan: free
+    region: oregon
+    envVars:
+      - key: PORT
+        value: 8888

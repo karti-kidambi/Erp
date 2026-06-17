@@ -18,9 +18,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.sdp.erp.model.Course;
 import com.sdp.erp.model.Faculty;
 import com.sdp.erp.model.Student;
+import com.sdp.erp.model.Attendance;
 import com.sdp.erp.service.AdminService;
 import com.sdp.erp.service.FacultyService;
 import com.sdp.erp.service.StudentService;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 @Controller
 @RequestMapping("/admin")
@@ -40,6 +45,43 @@ public class AdminController {
        ModelAndView modelAndView = new ModelAndView();
        modelAndView.setViewName("admin-dashboard");
        modelAndView.addObject("title", "Admin Dashboard");
+       
+       List<Student> students = adminService.findAllStudents();
+       List<Faculty> faculties = adminService.findAllFaculty();
+       List<Course> courses = adminService.findAllCourses();
+       List<Attendance> attendances = adminService.findAllAttendance();
+       
+       modelAndView.addObject("totalStudents", students.size());
+       modelAndView.addObject("totalFaculty", faculties.size());
+       modelAndView.addObject("totalCourses", courses.size());
+       
+       Map<Long, List<Attendance>> studentAttMap = new HashMap<>();
+       for (Attendance att : attendances) {
+           studentAttMap.computeIfAbsent(att.getStudentId(), k -> new ArrayList<>()).add(att);
+       }
+       
+       int shortageCount = 0;
+       List<Student> shortageStudents = new ArrayList<>();
+       for (Student s : students) {
+           List<Attendance> sAtts = studentAttMap.get(s.getStudentId());
+           if (sAtts != null && !sAtts.isEmpty()) {
+               int present = 0;
+               for (Attendance att : sAtts) {
+                   if ("Present".equalsIgnoreCase(att.getStatus())) {
+                       present++;
+                   }
+               }
+               double pct = ((double) present / sAtts.size()) * 100.0;
+               if (pct < 75.0) {
+                   shortageCount++;
+                   shortageStudents.add(s);
+               }
+           }
+       }
+       
+       modelAndView.addObject("shortageCount", shortageCount);
+       modelAndView.addObject("shortageStudents", shortageStudents);
+       
        return modelAndView;
    }
    

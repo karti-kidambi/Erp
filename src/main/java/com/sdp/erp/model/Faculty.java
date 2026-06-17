@@ -26,7 +26,7 @@ public class Faculty {
         joinColumns = @JoinColumn(name = "faculty_id"),
         inverseJoinColumns = @JoinColumn(name = "course_id")
     )
-    private List<Course> courses;
+    private List<Course> courses = new java.util.ArrayList<>();
 
     public String getUsername() {
 		return username;

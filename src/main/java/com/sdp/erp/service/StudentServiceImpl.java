@@ -92,6 +92,10 @@ public class StudentServiceImpl implements StudentService {
        existingStudent.setName(student.getName());
        existingStudent.setEmail(student.getEmail());
        existingStudent.setGradepoint(student.getGradepoint());
+       existingStudent.setRollNumber(student.getRollNumber());
+       existingStudent.setSemester(student.getSemester());
+       existingStudent.setDepartment(student.getDepartment());
+       existingStudent.setSection(student.getSection());
 
        studentRepository.save(existingStudent);
    }
